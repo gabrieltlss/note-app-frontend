@@ -1,0 +1,26 @@
+#login {
+    min-height: calc(100vh - 75px);
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    gap: 32px;
+    padding: 16px;
+    background-image: url("/images/login-background.webp");
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+}
+
+.hero-img {
+    width: 100%;
+}
+
+.btn-logo {
+    margin-right: 4px;
+}
+
+.login-content-container {
+    max-width: 500px;
+    width: 100%;
+    padding: 32px;
+}
