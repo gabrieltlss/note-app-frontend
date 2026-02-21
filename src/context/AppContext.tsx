@@ -1,9 +1,9 @@
 import { createContext, useState } from "react";
 import type { IAppContext } from "../types/IAppContext";
 
-export const AppContext = createContext({} as IAppContext);
+const AppContext = createContext({} as IAppContext);
 
-export function AppContextProvider({ children }: { children: React.ReactNode }) {
+function AppContextProvider({ children }: { children: React.ReactNode }) {
     const [token, setToken] = useState("");
 
     const addToken = (token: string | null) => {
@@ -19,3 +19,5 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
         </AppContext.Provider>
     )
 }
+
+export { AppContext, AppContextProvider };
