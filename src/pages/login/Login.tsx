@@ -13,7 +13,7 @@ export function Login(): ReactNode {
                     <h2>Entrar</h2>
                     <p>Realize login em uma conta Google</p>
 
-                    <a href="http://localhost:3000/google" className="w3-button w3-asphalt w3-round-large login-btn">
+                    <a href={`${import.meta.env.VITE_API_URL}/google`} className="w3-button w3-asphalt w3-round-large login-btn">
                         <img src="/images/google-icon.png" alt="" className="btn-logo" width={24} height={24} />
                         <span>Entrar</span>
                     </a>

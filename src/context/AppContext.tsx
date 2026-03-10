@@ -1,19 +1,32 @@
 import { createContext, useState } from "react";
 import type { IAppContext } from "../types/IAppContext";
+import type { Note } from "../types/Notes";
 
 const AppContext = createContext({} as IAppContext);
 
 function AppContextProvider({ children }: { children: React.ReactNode }) {
-    const [token, setToken] = useState("");
+    const [notes, setNotes] = useState<Note[]>([]);
 
-    const addToken = (token: string | null) => {
-        if (token) { setToken(token); }
+    const addNote = (note: Note): void => {
+        setNotes((state) => {
+            const newState = [...state, note];
+            return newState;
+        });
+    };
+
+    const removeNote = (noteId: number): void => {
+        setNotes((state) => {
+            const filteredList = state.filter(item => item.note_id !== noteId);
+            return filteredList;
+        });
     }
 
     return (
         <AppContext.Provider value={{
-            token,
-            addToken
+            notes,
+            setNotes,
+            addNote,
+            removeNote
         }}>
             {children}
         </AppContext.Provider>

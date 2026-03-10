@@ -1,0 +1,39 @@
+.note {
+    max-width: 230px;
+    width: 100%;
+}
+
+.modal-content {
+    margin: auto;
+    max-width: 450px;
+}
+
+.modal-note-content {
+    min-height: 150px;
+}
+
+.note-content {
+    height: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.note-btn {
+    padding: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.note-btn:hover {
+    cursor: pointer;
+}
+
+.dropdown {
+    margin-top: 4px;
+}
