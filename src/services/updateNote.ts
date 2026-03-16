@@ -1,16 +1,15 @@
-const fetchBody = (title: string, content: string): RequestInit => {
+const fetchBody = (title: string, content: string, status: string): RequestInit => {
     return {
         headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
         credentials: "include",
-        method: "POST",
-        body: JSON.stringify({ title, content })
+        body: JSON.stringify({ title, content, status })
     }
 }
 
-
-async function createNote(title: string, content: string) {
-    const create = await fetch(`${import.meta.env.VITE_API_URL}/notes`, fetchBody(title, content));
-    const body = await create.json();
+async function updateNote(title: string, content: string, status: string, noteId: number) {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/notes/${noteId}`, fetchBody(title, content, status));
+    const body = await res.json();
 
     if (body.error === "InvalidToken") {
         const refreshRes = await fetch(`${import.meta.env.VITE_API_URL}/auth/refresh`, { credentials: "include" });
@@ -18,8 +17,8 @@ async function createNote(title: string, content: string) {
         if (refreshBody.error) return refreshBody.error;
 
         if (refreshBody.message === "TokenCreated") {
-            const retryCreate = await fetch(`${import.meta.env.VITE_API_URL}/notes`, fetchBody(title, content));
-            const retryBody = await retryCreate.json();
+            const retryRes = await fetch(`${import.meta.env.VITE_API_URL}/notes/${noteId}`, fetchBody(title, content, status));
+            const retryBody = await retryRes.json();
             if (retryBody.error) return retryBody.error;
             return retryBody.message;
         }
@@ -29,4 +28,4 @@ async function createNote(title: string, content: string) {
     return body.message;
 }
 
-export { createNote };
+export { updateNote };

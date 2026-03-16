@@ -5,9 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import style from "./home.module.css";
 import { fetchNotes } from "../../services/fetchNotes";
 import NewNotesBtn from "../../components/newNotesBtn/NewNotesBtn";
-import ModalForm from "../../components/modal/ModalForm";
+import ModalForm from "../../components/createNoteForm/ModalForm";
 import Note from "../../components/note/Note";
-import { TokenError } from "../../services/api";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -17,22 +16,28 @@ export default function Home() {
 
     useEffect(() => {
         async function setInitialState() {
+            setLoading(true);
             try {
-                const result = await fetchNotes();
-                setNotes(result);
-            } catch (err) {
-                if (err instanceof TokenError) {
+                const getNotes = await fetchNotes();
+                if (typeof getNotes === "string" &&
+                    (getNotes === "InvalidToken" || getNotes === "UserNotDefined" || getNotes === "InvalidUser")) {
                     navigate("/");
                     return;
                 }
-                setError("Erro ao carregar notas. Tente novamente.");
+
+                if (typeof getNotes === "string" && getNotes === "ServerError") {
+                    setError("Erro ao obter notas.");
+                    return;
+                }
+
+                setNotes(getNotes);
             } finally {
                 setLoading(false);
             }
         }
 
         setInitialState();
-    }, [navigate]);
+    }, []);
 
     if (loading) {
         return (

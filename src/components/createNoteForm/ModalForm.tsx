@@ -1,19 +1,18 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./modalForm.module.css";
+import { AppContext } from "../../context/AppContext";
 import { createNote } from "../../services/createNote";
 import { fetchNotes } from "../../services/fetchNotes";
-import { ApiError, TokenError } from "../../services/api";
-import { AppContext } from "../../context/AppContext";
 
-type Feedback = { type: "success" | "error"; message: string } | null;
+type Feedback = { type: "success" | "error", message: string }
 
 export default function ModalForm() {
     const navigate = useNavigate();
     const { setNotes } = useContext(AppContext);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [feedback, setFeedback] = useState<Feedback>(null);
+    const [feedback, setFeedback] = useState<Feedback | null>();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const closeModal = () => {
@@ -26,10 +25,9 @@ export default function ModalForm() {
         setTitle("");
     };
 
-    const showFeedback = (fb: Feedback, delayMs: number) => {
-        setFeedback(fb);
-        setTimeout(() => setFeedback(null), delayMs);
-    };
+    const resetFeedback = () => {
+        setTimeout(() => setFeedback(null), 3000)
+    }
 
     const handleSubmit = async (ev: { preventDefault: () => void; }) => {
         ev.preventDefault();
@@ -47,29 +45,39 @@ export default function ModalForm() {
 
         setIsSubmitting(true);
         try {
-            await createNote(title, content);
-            const updatedNotes = await fetchNotes();
-            setNotes(updatedNotes);
-            showFeedback({ type: "success", message: "Nota criada com successo" }, 2500);
-            resetForm();
-        } catch (err) {
-            if (err instanceof TokenError) {
+            const create = await createNote(title, content);
+            if (typeof create === "string" &&
+                (create === "InvalidToken" || create === "UserNotDefined" || create === "InvalidUser")) {
                 navigate("/");
                 return;
             }
-            if (err instanceof ApiError) {
-                const errorMessages: Record<string, string> = {
-                    UserNotDefined: "Sessão inválida. Reinicie a sessão.",
-                    InvalidUser: "Utilizador inválido. Reinicie a sessão.",
-                    InvalidFields: "Campos inválidos. Verifique o título e conteúdo.",
-                    ServerError: "Erro de servidor. Tente novamente.",
-                };
-                showFeedback({ type: "error", message: errorMessages[err.errorCode] ?? "Erro desconhecido. Tente novamente." }, 5000);
+
+            if (create === "InvalidFields" || create === "ServerError") {
+                setFeedback({ type: "error", message: "Erro ao criar nota" });
+                resetFeedback();
                 return;
             }
-            showFeedback({ type: "error", message: "Erro inesperado. Tente novamente." }, 2500);
+
+            if (create === "NoteCreated") {
+                setFeedback({ type: "success", message: "Nota criada com successo" });
+                resetFeedback();
+
+                const getNotes = await fetchNotes();
+                if (typeof getNotes === "string" &&
+                    (getNotes === "InvalidToken" || getNotes === "UserNotDefined" || getNotes === "InvalidUser")) {
+                    navigate("/");
+                    return;
+                }
+                if (typeof getNotes === "string" && getNotes === "ServerError") {
+                    setFeedback({ type: "error", message: "Erro ao obter notas atualizadas." });
+                    resetFeedback();
+                    return;
+                }
+                setNotes(getNotes);
+            }
         } finally {
             setIsSubmitting(false);
+            resetForm();
         }
     };
 
@@ -114,16 +122,18 @@ export default function ModalForm() {
                                     >
                                         {isSubmitting ? "A criar..." : "Criar"}
                                     </button>
-                                    {feedback?.type === "success" && (
+                                    {
+                                        feedback?.type === "success" &&
                                         <span className="w3-margin-left w3-small w3-text-green">
                                             {feedback.message}
                                         </span>
-                                    )}
-                                    {feedback?.type === "error" && (
+                                    }
+                                    {
+                                        feedback?.type === "error" &&
                                         <span className="w3-margin-left w3-small w3-text-red">
                                             {feedback.message}
                                         </span>
-                                    )}
+                                    }
                                 </div>
 
                                 <div>

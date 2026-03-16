@@ -1,0 +1,6 @@
+.alert {
+    position: fixed;
+    bottom: 0;
+    max-width: 300px;
+    width: 100%;
+}

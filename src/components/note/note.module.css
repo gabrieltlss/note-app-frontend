@@ -3,6 +3,11 @@
     width: 100%;
 }
 
+.modal {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
 .modal-content {
     margin: auto;
     max-width: 450px;
@@ -35,5 +40,6 @@
 }
 
 .dropdown {
+    right: 0px;
     margin-top: 4px;
 }
