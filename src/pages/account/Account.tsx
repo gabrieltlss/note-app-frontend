@@ -146,7 +146,7 @@ export default function Account() {
                         :
                         isUserDeleted === true
                             ?
-                            <p className="w3-center w3-large">Usuário excluído. Redirecionando...</p>
+                            <p className="w3-center w3-large w3-text-green">Usuário excluído. Redirecionando...</p>
                             :
                             <p className="w3-center w3-large">Erro ao obter informações de usuário.</p>
                 }

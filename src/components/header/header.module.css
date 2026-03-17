@@ -20,6 +20,14 @@
     text-decoration: underline;
 }
 
+.alert {
+    max-width: 300px;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 16px;
+    padding: 16px;
+}
+
 @media screen and (min-width: 600px) {
     .header {
         padding: 0 32px;
