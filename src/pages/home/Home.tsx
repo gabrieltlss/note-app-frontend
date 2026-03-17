@@ -19,11 +19,15 @@ export default function Home() {
             setLoading(true);
             try {
                 const getNotes = await fetchNotes();
-                console.log(getNotes);
                 if (typeof getNotes === "string" &&
                     (getNotes === "InvalidToken" || getNotes === "UserNotDefined" ||
                         getNotes === "InvalidUser" || getNotes === "Authentication failed")) {
                     navigate("/");
+                    return;
+                }
+
+                if (typeof getNotes === "string" && getNotes === "UserNotFound") {
+                    setError("Usuário não encontrado.");
                     return;
                 }
 

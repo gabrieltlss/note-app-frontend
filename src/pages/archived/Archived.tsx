@@ -24,6 +24,11 @@ export default function Archived() {
                     return;
                 }
 
+                if (typeof getNotes === "string" && getNotes === "UserNotFound") {
+                    setError("Usuário não encontrado.");
+                    return;
+                }
+
                 if (typeof getNotes === "string" && getNotes === "ServerError") {
                     setError("Erro ao obter notas.");
                     return;
