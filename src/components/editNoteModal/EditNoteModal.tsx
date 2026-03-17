@@ -23,7 +23,7 @@ export default function EditNoteModal(
     const [status, setStatus] = useState<string>(currentStatus);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [feedback, setFeedback] = useState<Feedback>(null);
-    const { setNotes } = useContext(AppContext);
+    const { filterActivedNotes, filterArchivedNotes } = useContext(AppContext);
 
 
     const handleSubmit = async (ev: { preventDefault: () => void; }) => {
@@ -62,7 +62,8 @@ export default function EditNoteModal(
                     return;
                 }
 
-                setNotes(getNotes);
+                filterActivedNotes(getNotes);
+                filterArchivedNotes(getNotes);
                 return;
             }
 

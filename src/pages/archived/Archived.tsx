@@ -1,28 +1,25 @@
-import { useNavigate } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+import Header from "../../components/header/Header"
+import style from "./archived.module.css";
 import { AppContext } from "../../context/AppContext";
-import Header from "../../components/header/Header";
-import { useContext, useEffect, useState } from "react";
-import style from "./home.module.css";
-import { fetchNotes } from "../../services/fetchNotes";
-import NewNotesBtn from "../../components/newNotesBtn/NewNotesBtn";
-import ModalForm from "../../components/createNoteForm/ModalForm";
 import Note from "../../components/note/Note";
+import { fetchNotes } from "../../services/fetchNotes";
+import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Archived() {
     const navigate = useNavigate();
+    const { archivedNotes, filterArchivedNotes } = useContext(AppContext);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<null | string>(null);
-    const { notes, filterActivedNotes } = useContext(AppContext);
+
 
     useEffect(() => {
         async function setInitialState() {
-            setLoading(true);
             try {
                 const getNotes = await fetchNotes();
-                console.log(getNotes);
                 if (typeof getNotes === "string" &&
-                    (getNotes === "InvalidToken" || getNotes === "UserNotDefined" ||
-                        getNotes === "InvalidUser" || getNotes === "Authentication failed")) {
+                    (getNotes === "InvalidToken" || getNotes === "UserNotDefined" || getNotes === "InvalidUser"
+                        || getNotes === "Authentication failed")) {
                     navigate("/");
                     return;
                 }
@@ -31,8 +28,7 @@ export default function Home() {
                     setError("Erro ao obter notas.");
                     return;
                 }
-
-                filterActivedNotes(getNotes);
+                filterArchivedNotes(getNotes);
             } finally {
                 setLoading(false);
             }
@@ -40,6 +36,7 @@ export default function Home() {
 
         setInitialState();
     }, []);
+
 
     if (loading) {
         return (
@@ -64,24 +61,19 @@ export default function Home() {
 
     return (
         <>
-            <Header></Header>
+            <Header />
 
             <section className={style["note-container"]} id="notes">
                 {
-                    notes.length > 0
+                    archivedNotes.length > 0
                         ?
-                        notes.map((note) => (
+                        archivedNotes.map(note => (
                             <Note key={note.note_id} item={note} />
                         ))
                         :
-                        <p className="w3-center w3-large">
-                            Não há notas criadas.
-                        </p>
+                        <p className="w3-large w3-center">Não há notas arquivadas</p>
                 }
-
-                <ModalForm />
-                <NewNotesBtn />
-            </section>
+            </section >
         </>
-    );
+    )
 }

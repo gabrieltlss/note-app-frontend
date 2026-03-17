@@ -9,7 +9,7 @@ type Feedback = { type: "success" | "error", message: string }
 
 export default function ModalForm() {
     const navigate = useNavigate();
-    const { setNotes } = useContext(AppContext);
+    const { filterActivedNotes, filterArchivedNotes } = useContext(AppContext);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [feedback, setFeedback] = useState<Feedback | null>();
@@ -73,7 +73,8 @@ export default function ModalForm() {
                     resetFeedback();
                     return;
                 }
-                setNotes(getNotes);
+                filterActivedNotes(getNotes);
+                filterArchivedNotes(getNotes);
             }
         } finally {
             setIsSubmitting(false);

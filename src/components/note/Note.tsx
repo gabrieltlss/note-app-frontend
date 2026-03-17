@@ -17,7 +17,7 @@ type ShowAlert = {
 
 export default function Note({ item }: { item: Note }) {
     const navigate = useNavigate();
-    const { setNotes } = useContext(AppContext)
+    const { filterActivedNotes, filterArchivedNotes } = useContext(AppContext)
     const [isVisualizeModalOpen, setIsVisualizeModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -41,7 +41,8 @@ export default function Note({ item }: { item: Note }) {
                     setAlert({ color: "pale-red", text: "Erro ao atualizar notas." });
                     return;
                 }
-                setNotes(getNotes);
+                filterActivedNotes(getNotes);
+                filterArchivedNotes(getNotes);
                 return;
             }
 

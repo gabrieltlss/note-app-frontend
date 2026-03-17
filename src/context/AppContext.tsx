@@ -6,6 +6,17 @@ const AppContext = createContext({} as IAppContext);
 
 function AppContextProvider({ children }: { children: React.ReactNode }) {
     const [notes, setNotes] = useState<Note[]>([]);
+    const [archivedNotes, setArchivedNotes] = useState<Note[]>([]);
+
+    const filterArchivedNotes = (archived: Note[]) => {
+        const filterArchived = archived.filter(note => note.status === "archived");
+        setArchivedNotes(filterArchived)
+    };
+
+    const filterActivedNotes = (archived: Note[]) => {
+        const filterArchived = archived.filter(note => note.status === "active");
+        setNotes(filterArchived)
+    };
 
     const addNote = (note: Note): void => {
         setNotes((state) => {
@@ -24,7 +35,9 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
     return (
         <AppContext.Provider value={{
             notes,
-            setNotes,
+            archivedNotes,
+            filterArchivedNotes,
+            filterActivedNotes,
             addNote,
             removeNote
         }}>
