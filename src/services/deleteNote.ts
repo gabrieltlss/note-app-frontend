@@ -1,7 +1,11 @@
 async function deleteNoteById(noteId: string) {
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/notes/${noteId}`,
-        { credentials: "include", method: "DELETE" }
+        {
+            credentials: "include",
+            method: "DELETE",
+            headers: { 'Content-Type': 'application/json' }
+        }
     );
     const body = await res.json();
     console.log(body);
@@ -15,7 +19,7 @@ async function deleteNoteById(noteId: string) {
         if (refreshBody.message === "TokenCreated") {
             const retryRes = await fetch(
                 `${import.meta.env.VITE_API_URL}/notes/${noteId}`,
-                { credentials: "include", method: "DELETE" }
+                { credentials: "include", method: "DELETE", headers: { 'Content-Type': 'application/json' } }
             );
             const retryBody = await retryRes.json();
             console.log(retryBody);

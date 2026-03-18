@@ -1,5 +1,6 @@
 async function deleteUser() {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/account/delete`, { method: "DELETE", credentials: "include" });
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/account/delete`,
+        { method: "DELETE", credentials: "include", headers: { 'Content-Type': 'application/json' } });
     const body = await res.json();
 
     if (body.error === "InvalidToken") {
@@ -8,7 +9,8 @@ async function deleteUser() {
         if (refreshBody.error) return refreshBody.error;
 
         if (refreshBody.message === "TokenCreated") {
-            const retryRes = await fetch(`${import.meta.env.VITE_API_URL}/account/delete`, { method: "DELETE", credentials: "include" });
+            const retryRes = await fetch(`${import.meta.env.VITE_API_URL}/account/delete`,
+                { method: "DELETE", credentials: "include", headers: { 'Content-Type': 'application/json' } });
             const retryBody = await retryRes.json();
             if (retryBody.error) return retryBody.error;
             return retryBody.message;
