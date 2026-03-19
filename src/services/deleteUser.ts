@@ -2,8 +2,7 @@ async function deleteUser() {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/account/delete`, {
         method: "DELETE",
         credentials: "include",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" }
+        mode: "cors"
     });
     const body = await res.json();
 
@@ -13,11 +12,10 @@ async function deleteUser() {
         if (refreshBody.error) return refreshBody.error;
 
         if (refreshBody.message === "TokenCreated") {
-            const retryRes = await fetch(`${import.meta.env.VITE_API_URL}/account/delete`, {
+            const retryRes = await fetch(`${import.meta.env.VITE_API_URL}/account/DELETE`, {
                 method: "DELETE",
                 credentials: "include",
-                mode: "cors",
-                headers: { "Content-Type": "application/json" }
+                mode: "cors"
             });
             const retryBody = await retryRes.json();
             if (retryBody.error) return retryBody.error;
