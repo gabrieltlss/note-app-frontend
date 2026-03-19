@@ -2,7 +2,11 @@ async function deleteUser() {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/account/delete`, {
         method: "DELETE",
         credentials: "include",
-        mode: "cors"
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
     });
     console.log(res);
     const body = await res.json();
@@ -17,7 +21,11 @@ async function deleteUser() {
             const retryRes = await fetch(`${import.meta.env.VITE_API_URL}/account/DELETE`, {
                 method: "DELETE",
                 credentials: "include",
-                mode: "cors"
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
             });
             const retryBody = await retryRes.json();
             if (retryBody.error) return retryBody.error;
