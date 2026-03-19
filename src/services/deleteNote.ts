@@ -7,6 +7,7 @@ async function deleteNoteById(noteId: string) {
             mode: "cors"
         }
     );
+    console.log(res);
     const body = await res.json();
     console.log(body);
 

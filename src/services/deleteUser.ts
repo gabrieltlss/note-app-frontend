@@ -4,7 +4,9 @@ async function deleteUser() {
         credentials: "include",
         mode: "cors"
     });
+    console.log(res);
     const body = await res.json();
+    console.log(body)
 
     if (body.error === "InvalidToken") {
         const refreshRes = await fetch(`${import.meta.env.VITE_API_URL}/auth/refresh`, { credentials: "include" });
