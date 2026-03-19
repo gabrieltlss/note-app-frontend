@@ -5,7 +5,7 @@ async function deleteUser() {
         mode: "cors",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Accept": "*/*"
         }
     });
     console.log(res);

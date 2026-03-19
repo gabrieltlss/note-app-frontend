@@ -7,7 +7,7 @@ async function deleteNoteById(noteId: string) {
             mode: "cors",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Accept": "*/*"
             }
         }
     );
