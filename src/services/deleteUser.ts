@@ -3,11 +3,9 @@ async function deleteUser() {
         method: "DELETE",
         credentials: "include",
         mode: "cors",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "*/*"
-        }
+        headers: { "Content-Type": "application/json", "Accept": "application/json" }
     });
+
     console.log(res);
     const body = await res.json();
     console.log(body)
@@ -22,11 +20,9 @@ async function deleteUser() {
                 method: "DELETE",
                 credentials: "include",
                 mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                }
+                headers: { "Content-Type": "application/json", "Accept": "application/json" }
             });
+
             const retryBody = await retryRes.json();
             if (retryBody.error) return retryBody.error;
             return retryBody.message;
