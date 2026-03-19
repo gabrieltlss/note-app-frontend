@@ -4,7 +4,8 @@ async function deleteNoteById(noteId: string) {
         {
             credentials: "include",
             method: "DELETE",
-            mode: "cors"
+            mode: "cors",
+            referrer: "https://note-app-frontend-omega.vercel.app"
         }
     );
     console.log(res);
@@ -23,7 +24,8 @@ async function deleteNoteById(noteId: string) {
                 {
                     credentials: "include",
                     method: "DELETE",
-                    mode: "cors"
+                    mode: "cors",
+                    referrer: "https://note-app-frontend-omega.vercel.app"
                 }
             );
             const retryBody = await retryRes.json();
