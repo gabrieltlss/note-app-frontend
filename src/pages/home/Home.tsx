@@ -79,7 +79,7 @@ export default function Home() {
                         ))
                         :
                         <p className="w3-center w3-large">
-                            Não há notas criadas.
+                            Não há notas ativas.
                         </p>
                 }
 

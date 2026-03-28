@@ -53,8 +53,8 @@ export default function Account() {
     const handleUserDelete = async () => {
         if (!user || typeof user === "undefined") return;
 
-        const confirmDelete = confirm("Tem certeza que deseja excluir sua conta?\nEsta ação é irreversível.")
-        if (!confirmDelete) return;
+        const confirmDelete = prompt("Tem certeza que deseja excluir sua conta?\nEsta ação é irreversível.\n\nDigite 'deletar' para excluir.")
+        if (confirmDelete !== "deletar") return alert("Exclusão NÃO realizada");
 
         setIsSubmiting(true);
         try {
