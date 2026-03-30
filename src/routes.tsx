@@ -3,8 +3,17 @@ import { Login } from "./pages/login/Login";
 import Home from "./pages/home/Home";
 import Archived from "./pages/archived/Archived";
 import Account from "./pages/account/Account";
+import NotFound from "./pages/error/NotFound";
+import ErrorPage from "./pages/error/ErrorPage";
 
 const router = createBrowserRouter([
+    {
+        errorElement: <ErrorPage />
+    },
+    {
+        path: "*",
+        element: <NotFound />
+    },
     {
         path: "/",
         element: <Login />,
