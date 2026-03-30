@@ -8,7 +8,7 @@ export default function ErrorPage() {
             </header>
 
             <section className="w3-padding-large w3-center">
-                <h2>Um error inesperado ocorreu...</h2>
+                <h2>Um erro inesperado ocorreu...</h2>
                 <p>
                     Tente novamente mais tarde ou retorne para a página <Link to="/home"><b>Principal</b></Link> ou para a página de <Link to="/"><b>Login</b></Link>.
                 </p>
