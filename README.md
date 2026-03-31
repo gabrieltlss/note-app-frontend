@@ -81,7 +81,7 @@ npm run build
 ```
 
 ## Uso do projeto
-O projeto pode ser executado como mostrado anteriormente. Caso queira uma opção imediata, acesse o projeto já dispnível em https://note-app.gabrieltlss.com.br/
+O projeto pode ser executado como mostrado anteriormente. Caso queira uma opção imediata, acesse o projeto já disponível em https://note-app.gabrieltlss.com.br/
 
 ## Contribuição
 Projeto de código aberto que permite uso livre e modificações quaisquer, mas que, por sua natureza pessoal e expositiva, não aceitará contribuições neste repositório em específico.
